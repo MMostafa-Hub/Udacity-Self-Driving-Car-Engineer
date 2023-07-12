@@ -14,7 +14,7 @@ def viz(ground_truth):
     # create a figure with 3x3 subplots
     fig, ax = plt.subplots(3, 3, figsize=(20, 20))
     # loop over the subplots and ground truth data
-    for _, (axi, gt) in enumerate(zip(np.ndarray.flatten(ax), ground_truth)):
+    for axi, gt in zip(np.ndarray.flatten(ax), ground_truth):
         # get the image
         image = plt.imread(
             os.path.join(
@@ -29,7 +29,6 @@ def viz(ground_truth):
         axi.imshow(image)
         # loop over the bboxes
         for bbox, class_ in zip(gt["boxes"], gt["classes"]):
-
             # get the coordinates
             y1, x1, y2, x2 = bbox
 
