@@ -34,7 +34,7 @@ def viz(ground_truth, predictions):
     """
     color_map = {1: "red", 2: "blue"}
     # create a figure with 3x3 subplots
-    fig, ax = plt.subplots(4, 4, figsize=(15, 15))
+    fig, ax = plt.subplots(4, 5, figsize=(20, 10))
     # loop over the subplots and ground truth data
     for axi, gt in zip(np.ndarray.flatten(ax), ground_truth):
         # get the image
@@ -67,6 +67,9 @@ def viz(ground_truth, predictions):
         axi.set(title=None)
         # turn off the axis
         axi.axis("off")
+
+    # make the plot look nice
+    plt.tight_layout()
     # display the plot
     plt.show()
 
