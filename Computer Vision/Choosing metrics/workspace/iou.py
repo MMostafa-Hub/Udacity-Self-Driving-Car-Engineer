@@ -20,15 +20,48 @@ def calculate_ious(gt_bboxes, pred_bboxes):
 
 
 def calculate_intersection(gt_bbox, pred_bbox):
-    return max(0, min(gt_bbox[2], pred_bbox[2]) - max(gt_bbox[0], pred_bbox[0])) * max(
-        0, min(gt_bbox[3], pred_bbox[3]) - max(gt_bbox[1], pred_bbox[1])
-    )
+    """
+    Calculate the intersection area between two bounding boxes.
+
+    Args:
+    - gt_bbox [array]: 1x4 single ground truth bounding box
+    - pred_bbox [array]: 1x4 single predicted bounding box
+    Format: [x1, y1, x2, y2]
+
+    Returns:
+    - intersection [float]: intersection area between the two bounding boxes
+    """
+    gt_x1, gt_y1, gt_x2, gt_y2 = gt_bbox
+    pred_x1, pred_y1, pred_x2, pred_y2 = pred_bbox
+
+    x_intersect = max(0, min(gt_x2, pred_x2) - max(gt_x1, pred_x1))
+    y_intersect = max(0, min(gt_y2, pred_y2) - max(gt_y1, pred_y1))
+    return x_intersect * y_intersect
 
 
 def calculate_union(gt_bbox, pred_bbox, intersection):
-    area_gt = (gt_bbox[2] - gt_bbox[0]) * (gt_bbox[3] - gt_bbox[1])
-    area_pred = (pred_bbox[2] - pred_bbox[0]) * (pred_bbox[3] - pred_bbox[1])
-    return area_gt + area_pred - intersection
+    """
+    Calculate the union area between two bounding boxes.
+
+    Args:
+    - gt_bbox [array]: 1x4 single ground truth bounding box
+    - pred_bbox [array]: 1x4 single predicted bounding box
+    Format: [x1, y1, x2, y2]
+
+    - intersection [float]: intersection area between the two bounding boxes
+
+    Returns:
+    - union [float]: union area between the two bounding boxes
+    """
+    gt_x1, gt_y1, gt_x2, gt_y2 = gt_bbox
+    pred_x1, pred_y1, pred_x2, pred_y2 = pred_bbox
+
+    gt_area = (gt_x2 - gt_x1) * (gt_y2 - gt_y1)
+    pred_area = (pred_x2 - pred_x1) * (pred_y2 - pred_y1)
+    return gt_area + pred_area - intersection
+
+
+
 
 
 def calculate_iou(gt_bbox, pred_bbox):
