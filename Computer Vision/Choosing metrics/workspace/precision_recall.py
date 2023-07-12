@@ -15,16 +15,16 @@ def precision_recall(ious, gt_classes, pred_classes):
     - precision [float]
     - recall [float]
     """
-    xs, ys = np.where(ious > 0.5)
+    gt_is, pred_js = np.where(ious > 0.5)
     tp, fp = 0, 0
-    for x, y in zip(xs, ys):
-        if gt_classes[x] == pred_classes[y]:
+    for i, j in zip(gt_is, pred_js):
+        if gt_classes[i] == pred_classes[j]:
             tp += 1
         else:
             fp += 1
 
     # matched_gt is the number of ground truth boxes that have an IoU > 0.5 with a prediction
-    matched_gt = len(np.unique(xs))
+    matched_gt = len(np.unique(gt_is))
     # fn is the number of ground truth boxes that do not have an IoU > 0.5 with a prediction
     fn = len(gt_classes) - matched_gt
 
